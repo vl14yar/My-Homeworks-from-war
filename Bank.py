@@ -88,10 +88,10 @@ class BankAcount:
 
     @inform_logger
     @time_logger
-    def trans_to_card(self, another_acount, cvv, date, money):
+    def trans_to_card(self, another_account, cvv, date, money):
         if self.__cvv == cvv and self._date == date:
             self.__money += money
-            another_acount.__money -= money
+            another_account.__money -= money
             return 'Transacttion complited'
         else:
             return 'Error'
@@ -100,26 +100,26 @@ class BankAccount:
     numer = 0
     cvv = 0
     pin = 0
-    an_ac = 0
+    an_acc = 0
     money = 0
     @staticmethod
     def print_money(account):
         try:
-            pin = int(input('input a pin: '))
+            pin = int(input('Input your pin: '))
         except:
-            return 'it is not number'
+            return 'It is not number'
         return BankAcount.print_money(account, pin)
     @staticmethod
     @time_logger
     def credit_to_card(account):
         try:
-            number = int(input('input a number: '))
+            number = int(input('Input a number: '))
         except:
-            return 'it is not number'
+            return 'It is not number'
         try:
-            money = int(input('number of money: '))
+            money = int(input('Input a number of money: '))
         except:
-            return 'it is not number'
+            return 'It is not number'
         BankAccount.number = number
         BankAccount.money = money
         return account.credit_to_card(number, money)
@@ -128,21 +128,21 @@ class BankAccount:
     @time_logger
     def withdraw(account):
         try:
-            pin = int(input('input a pin: '))
+            pin = int(input('Input your pin: '))
         except:
-            return 'it is not number'
+            return 'It is not number'
         try:
-            money = int(input('number of money: '))
+            money = int(input('Input a number of money: '))
             money = money * -1
         except:
-            return 'it is not number'
+            return 'It is not number'
         BankAccount.pin = pin
         BankAccount.money = money * -1
         return account.withdraw(pin, money)
 
     @staticmethod
     @time_logger
-    def trans_to_card(account, another_ack):
+    def trans_to_card(account, another_acc):
         try:
             date = input('Date: ')
             cvv = int(input('CVV: '))
@@ -156,8 +156,8 @@ class BankAccount:
         BankAccount.money = money * -1
         BankAccount.cvv = cvv
         BankAccount.date = date
-        BankAccount.an_ac = another_ack.ame
-        return account.trans_to_card(another_ack, cvv, date, money)
+        BankAccount.an_acc = another_acc.name
+        return account.trans_to_card(another_acc, cvv, date, money)
 
 
 def main(borya_johnsonuk, vova_zelenskiy):
