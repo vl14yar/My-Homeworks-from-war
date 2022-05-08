@@ -1,0 +1,95 @@
+class Human:
+    number_of_humans = 0
+    increase_amount = 1.05
+
+    def __init__(self, first, last, age, pay):
+        self.first = first
+        self.last = last
+        self.pay = pay
+        self.age = age
+        self.email = f'{first}.{last}@gmail.com'
+        Human.number_of_humans += 1
+
+    def fullname(self):
+        return f'{self.first} {self.last}'
+
+    def pay_increase(self):
+        self.pay *= self.increase_amount
+
+    def __str__(self):
+        return f"{self.last} {self.first}, email: {self.email}, salary: {self.pay}"
+
+    def __repr__(self):
+        return f"Human({self.first}, {self.last}, {self.pay})"
+
+    def __add__(self, other):
+        return self.pay + other.pay
+
+
+human_1 = Human('Ivan', 'Sirko', 54, 30000)
+
+
+class Adult(Human):
+    increase_amount = 1.04
+
+    def __init__(self, first, last, pay, sex):
+        super().__init__(first, last, pay, '')
+        self.sex = sex
+
+
+adult_1 = Adult('Bohdan', 'Khmelnytskyi', 30000, 'male')
+
+
+class Worker(Adult):
+    increase_amount = 1.15
+
+    def __init__(self, first, last, pay, work):
+        super().__init__(first, last, pay, '')
+        self.work = work
+
+
+worker_1 = Worker('Bodya', 'Pavuk', '15000', 'boss of all spiders')
+
+
+class Student(Human):
+    increase_amount = 1.04
+
+    def __init__(self, first, last, pay, faculty):
+        super().__init__(first, last, pay, '')
+        self.faculty = faculty
+
+
+stud_1 = Student('Igor', 'Kolesnykov', 6000, 'Jurisprudence')
+stud_2 = Student('Anya', 'Melnyk', 5000, 'Math')
+
+
+print(human_1.increase_amount)
+print(stud_1.increase_amount)
+
+class Teacher(Worker):
+    increase_amount = 1.1
+
+    def __init__(self, first, last, pay, students=None):
+        super().__init__(first, last, pay, '')
+        Teacher.__init__(self, first, last, pay)
+        if students:
+            self.students = students
+        else:
+            self.students = []
+
+    def add_stud(self, stud):
+        if stud not in self.students:
+            self.students.append(stud)
+
+    def rem_stud(self, stud):
+        if stud in self.students:
+            self.students.remove(stud)
+
+    def print_studs(self):
+        for stud in self.students:
+            print(f"--->{stud.fullname()}")
+
+    def transfer(self):
+        return Teacher(self.first, self.last, self.pay)
+        
+# чомусь не вийшло запрінтити фулнейм студентів
