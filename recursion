@@ -1,13 +1,21 @@
 '''1. написати ф-ію з використанням рекурсії,
  яка перевірятиме чи передане слово поліндром'''
 
-random_str = input("Enter word which you want to check: ")
+def is_palindrome(string):
+    reversed_string = ""
+    st = string.replace(" ", "")
+    st = st.lower()
+    for i in range(len(st), 0, -1):
+        if st[i - 1] >= 'a' and st[i - 1] <= 'z':
+            reversed_string += st[i - 1]
+    if st == reversed_string:
+        print("This is polindrome")
+    else:
+        print("This isn`t a polindrome")
 
-checking = checking = ''.join(reversed(random_str))
-if checking == random_str:
-    print(random_str," is polindrome")
-else:
-    print(random_str,"isn`t polindrome")
+if __name__ == '__main__':
+    is_palindrome("Oko oo oko")
+    is_palindrome("Abvgd")
     
 
 '''2. написати ф-ію з використанням рекурсії, 
