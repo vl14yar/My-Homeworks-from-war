@@ -1,0 +1,28 @@
+'''1. написати ф-ію з використанням рекурсії,
+ яка перевірятиме чи передане слово поліндром'''
+
+random_str = input("Enter word which you want to check: ")
+
+checking = checking = ''.join(reversed(random_str))
+if checking == random_str:
+    print(random_str," is polindrome")
+else:
+    print(random_str,"isn`t polindrome")
+    
+
+'''2. написати ф-ію з використанням рекурсії, 
+яка повертатиме суму усіх чисел в списку'''
+
+def list_sum(A):
+    suma = 0
+
+    for t in A:
+        if not isinstance(t, list):
+            suma = suma + t
+        else:
+            suma = suma + list_sum(t)
+    return suma
+
+l1 = [2, 3, [1, 2], [4, 5, [10, 1]]]
+suma = list_sum(l1)
+print(suma)
