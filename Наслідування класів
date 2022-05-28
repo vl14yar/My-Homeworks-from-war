@@ -1,95 +1,195 @@
+import random
+
+
 class Human:
-    number_of_humans = 0
-    increase_amount = 1.05
 
-    def __init__(self, first, last, age, pay):
-        self.first = first
+    def __init__(self, name, last, age, birthday, hobbies, favourite_hobby=None, favourite_film=None):
+        self.name = name
         self.last = last
-        self.pay = pay
         self.age = age
-        self.email = f'{first}.{last}@gmail.com'
-        Human.number_of_humans += 1
+        self.birthday = birthday
+        self.favourite_hobby = favourite_hobby
+        self.favourite_film = favourite_film
+        self.hobbies = hobbies
 
-    def fullname(self):
-        return f'{self.first} {self.last}'
+    def move(self):
+        return "I can move"
 
-    def pay_increase(self):
-        self.pay *= self.increase_amount
+    def eat(self):
+        return "I can eat"
+
+    def think(self):
+        return "I can think"
+
+    def work(self):
+        return "I can work"
 
     def __str__(self):
-        return f"{self.last} {self.first}, email: {self.email}, salary: {self.pay}"
+        return f"{self.name} {self.last} is {self.age} years old. He/She was born on the {self.birthday}.His/Her" \
+               f" favourite hobby is {self.favourite_hobby}"
 
-    def __repr__(self):
-        return f"Human({self.first}, {self.last}, {self.pay})"
-
-    def __add__(self, other):
-        return self.pay + other.pay
-
-
-human_1 = Human('Ivan', 'Sirko', 54, 30000)
+    def fullname(self):
+        return f"{self.name} {self.last}"
 
 
 class Adult(Human):
-    increase_amount = 1.04
+    num_refer = 0
 
-    def __init__(self, first, last, pay, sex):
-        super().__init__(first, last, pay, '')
-        self.sex = sex
+    def __init__(self, name, last, age, birthday, zodiac_sign, hobby, favourite_book=None):
+        super().__init__(name, last, age, birthday, zodiac_sign, hobby, favourite_book)
+
+    def vote(self):
+        self.num_refer += 1
+
+    def pay_taxes(self):
+        return "I must pay taxes"
+
+    def revolution(self):
+        return f"He-he, anti-capitalist revolution time"
 
 
-adult_1 = Adult('Bohdan', 'Khmelnytskyi', 30000, 'male')
+class Student(Adult):
+    def __init__(self, name, last, age, birthday, hobbies, class_school, class_teacher, favourite_book=None,
+                 favourite_hobby=None):
+        super().__init__(name, last, age, birthday, hobbies, favourite_book, favourite_hobby)
+        self.height = random.randint(160, 180)
+        self.weight = random.randint(55, 90)
+        self.class_school = class_school
+        self.class_teacher = class_teacher
+
+    def favourite_subject(self):
+         if 12 < int(self.age) < 17:
+            list_of_subjects = ['Geometry', 'English', 'Algebra', 'Geography', 'Ukrainian', 'Physics', 'History',
+                                'Chemistry', 'French', 'Informatics', 'Biology', 'German']
+            return f"My favourite subject is {random.choice(list_of_subjects)}"
+
+    def info_for_school(self):
+        return f"{self.name}'s height is {self.height} cm and weight is {self.weight} kg"
+
+    def ZNO(self):
+        zno_subjects = ['Geography', 'Physics', 'French', 'German', 'Chemistry', 'History', 'Biology']
+        return f"""I want receive:
+Ukrainian: {random.randint(190, 200)}
+Math: {random.randint(190, 200)}
+English: {random.randint(190, 200)}
+{random.choice(zno_subjects)}: {random.randint(190, 200)}"""
+
+
+class Child(Human):
+    def __init__(self, name, last, age, birthday, hobby, favourite_toy, favourite_book=None,
+                 favourite_hobby=None):
+        super().__init__(name, last, age, birthday, hobby, favourite_book, favourite_hobby)
+        if int(self.age) < 4:
+            self.height = random.randint(100, 125)
+            self.weight = random.randint(18, 30)
+        else:
+            self.height = random.randint(126, 140)
+            self.weight = random.randint(31, 35)
+        self.favourite_toy = favourite_toy
+
+    def dream_profession(self):
+        list_of_dreams = ['Actor', 'Teacher', 'Engineer', 'Programmer', 'Firefighter', 'Astronaut',
+                          'Soldier', 'Driver']
+        return f"I want to be a/an {random.choice(list_of_dreams)}"
+
+    def info(self):
+        return f"{self.name}'s height is {self.height} cm and weight is {self.weight} kilos"
 
 
 class Worker(Adult):
-    increase_amount = 1.15
-
-    def __init__(self, first, last, pay, work):
-        super().__init__(first, last, pay, '')
-        self.work = work
-
-
-worker_1 = Worker('Bodya', 'Pavuk', '15000', 'boss of all spiders')
-
-
-class Student(Human):
-    increase_amount = 1.04
-
-    def __init__(self, first, last, pay, faculty):
-        super().__init__(first, last, pay, '')
-        self.faculty = faculty
-
-
-stud_1 = Student('Igor', 'Kolesnykov', 6000, 'Jurisprudence')
-stud_2 = Student('Anya', 'Melnyk', 5000, 'Math')
-
-
-print(human_1.increase_amount)
-print(stud_1.increase_amount)
-
-class Teacher(Worker):
     increase_amount = 1.1
 
-    def __init__(self, first, last, pay, students=None):
-        super().__init__(first, last, pay, '')
-        Teacher.__init__(self, first, last, pay)
-        if students:
-            self.students = students
-        else:
-            self.students = []
+    def __init__(self, name, last, age, birthday, hobby, pay, work, qualification, favourite_book=None,
+                 favourite_hobby=None):
+        super().__init__(name, last, age, birthday, hobby, favourite_book, favourite_hobby)
+        self.pay = pay
+        self.work = work
+        self.qualification = qualification
 
-    def add_stud(self, stud):
-        if stud not in self.students:
-            self.students.append(stud)
+    def incr_amount(self):
+        return float(self.pay) * self.increase_amount
 
-    def rem_stud(self, stud):
-        if stud in self.students:
-            self.students.remove(stud)
+    def holidays(self):
+        months = ['January', 'February', 'March', 'April', 'May', 'June' 'July', 'August', 'September', 'October',
+                  'November', 'December']
+        return f"{random.randint(10, 20)} days since {random.choice(months)}"
 
-    def print_studs(self):
-        for stud in self.students:
-            print(f"--->{stud.fullname()}")
 
-    def transfer(self):
-        return Teacher(self.first, self.last, self.pay)
-        
-# чомусь не вийшло запрінтити фулнейм студентів
+class Teacher(Worker):
+    def __init__(self, name, last, age, birthday, hobby, pay, work, subject, qualification, workload,
+                 workplace, students, favourite_book=None, favourite_hobby=None):
+        super().__init__(name, last, age, birthday, hobby, work, qualification, favourite_book,
+                         favourite_hobby)
+        self.pay = pay
+        self.subject = subject
+        self.workload = workload
+        self.workplace = workplace
+        self.students = students
+
+    def add_s(self, std):
+        if std not in self.students:
+            self.students.append(std)
+
+    def rem_s(self, std):
+        if std in self.students:
+            self.students.remove(std)
+
+    def print_s(self):
+        for std in self.students:
+            print(std)
+
+
+class Revolutionist(Student, Human):
+    print('Revolutionist.__init__() ->')
+
+    def __init__(self, name, last, age, birthday, hobby, class_, country, favourite_book=None,
+                 favourite_hobby=None):
+        super().__init__(name, last, age, birthday, hobby, class_, country, favourite_book,
+                         favourite_hobby)
+
+    def __getattr__(self, attr):
+        return attr.upper()
+
+    def revol(self):
+        return "REVOLUTION!"
+
+#Child
+chi_1 = Child('John', 'Doe', '4', '01/02/2018', 'playing with toys', 'Kolobok', 'playing with toys')
+chi_2 = Child('Elona', 'Musk', '4', '11/01/2018', 'ride a bike', 'Rukavychka', 'riding a bike')
+print(chi_1.__str__())
+print(chi_2.__str__())
+print(chi_2.dream_profession())
+print(chi_1.info())
+print(chi_2.info())
+
+#Adult
+ad_1 = Adult('Olena', 'Zelenska', '30', '01.10/1992', 'What wrong with a diplomacy?', 'Charity')
+ad_2 = Adult('Dmitriy', 'Komarov', '28', '07/05/1994', 'Robinson Crusoe', 'Journalism')
+ad_1.vote()
+ad_1.vote()
+print(ad_2.__str__())
+
+# Student
+std_1 = Student('Sasha', 'Dmitriev', '17', '11/05/2005', 'Recording', 'ski', '11B', 'Recording', 'Toreadory z Vasyukivky')
+std_2 = Student('Iryna', 'Fedyshyn', '13', '09/12/2009', 'Singing', 'dance', '3B', 'Singing', 'The White Fang')
+print(std_1.ZNO())
+print(std_2.favourite_subject())
+print(std_1.favourite_hobby)
+#Worker
+w_1 = Worker('Stepan', 'Banderyk', '35', '01/01/1987', 'Programming', '35000', 'Programmer', 'Senior', 'Programming')
+print(w_1.incr_amount())
+print(w_1.pay_taxes())
+print(w_1.favourite_hobby)
+print(w_1.holidays())
+
+#Teacher
+teach_1 = Teacher('Natalia', 'Mykolaiivna', '63', '26/08/1959', 'Teaching', '15000', 'Teacher', 'Ukrainian',
+                  'methodist', '27 students', 'Lyceum 51', [std_1, std_2], 'Pidhotovka do ZNO z Oleksandrom Avramenkom',
+                  'reading books')
+print(teach_1.__str__())
+teach_1.print_s()
+
+#Revolutionist
+rvl_1 = Revolutionist('Mao', ' Zedong', '129', '22/01/1983', 'Revolution', 'Working', 'China', 'Revolution',
+                      'The Long March')
+print(rvl_1.__str__())
